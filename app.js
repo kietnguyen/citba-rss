@@ -9,7 +9,7 @@ var path = require('path');
 var app = express();
 
 // all environments
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 4000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(express.favicon());
@@ -35,8 +35,8 @@ setInterval(function(err) {
 }, 15 * 60 * 1000);
 
 app.get('/', routes.index);
-app.get('/ba.xml', routes.index);
-app.get('/jobs.xml', routes.index);
+app.get('/ba.xml', routes.ba);
+app.get('/job.xml', routes.job);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

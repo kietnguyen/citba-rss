@@ -8,7 +8,7 @@ var _ = require('underscore'),
     twitter = require('simple-twitter'),
     RSS = require('rss'),
     unshort = require('unshort'),
-    feedcrawler = require('./lib/feedcrawler.js');
+    feedcrawler = require('./feedcrawler.js');
 
 var sep = "##########";
 
@@ -28,7 +28,7 @@ var feed = new RSS({
   site_url: 'http://www.informationintelligence.org/'
 });
 
-var get_rss_content = function() {
+exports.get_rss_content = function() {
   feed.items = [];
   twit.get('statuses/user_timeline', function (error, data) {
     var jsonData = JSON.parse(data);
@@ -119,5 +119,13 @@ var get_rss_content = function() {
 };
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Express' });
+  res.render('index');
+};
+
+exports.ba = function(req, res){
+  res.render('index');
+};
+
+exports.job = function(req, res){
+  res.render('index');
 };
