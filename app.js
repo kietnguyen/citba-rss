@@ -3,8 +3,9 @@
 
 var express = require('express');
 var routes = require('./routes');
-var http = require('http');
-var path = require('path');
+var mongoose = require('mongoose'),
+    http = require('http'),
+    path = require('path');
 
 var app = express();
 
@@ -27,12 +28,29 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+// connect to db
+var connect = function () {
+  var options = { server: { socketOptions: { keepAlive: 1 } } };
+  mongoose.connect("mongodb://localhost/citba-rss", options);
+};
+connect();
+
+// Error handler
+mongoose.connection.on('error', function (err) {
+  console.error(err);
+});
+
+// Reconnect when closed
+mongoose.connection.on('disconnected', function () {
+  connect();
+});
+
 setInterval(function(err) {
   if (err) { console.error(err); }
 
   console.log("Getting new contents ... ");
-  get_rss_content();
-}, 15 * 60 * 1000);
+  routes.get_rss_content();
+}, 15 * 1000);
 
 app.get('/', routes.index);
 app.get('/ba.xml', routes.ba);

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 
-var _ = require('underscore'),
+var _ = require('lodash'),
     cheerio = require('cheerio'),
     querystring = require('querystring');
 
@@ -552,9 +552,9 @@ exports.get_feed_item = function (html, tweetInfo) {
       item = beautifuldata($, tweetInfo);
       break;
 
-      //    case 'careers.analytictalent.com':
-      //      item = analytictalent($, tweetInfo);
-      //      break;
+    case 'careers.analytictalent.com':
+      item = analytictalent($, tweetInfo);
+      break;
 
     case 'cio.com':
       item = cio($, tweetInfo);

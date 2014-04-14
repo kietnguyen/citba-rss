@@ -1,14 +1,19 @@
 #!/usr/bin/env node
 "use strict";
 
-var _ = require('underscore'),
+require("../models/feed.js");
+
+var _ = require('lodash'),
+    async = require('async'),
     http = require('http'),
     express = require('express'),
     cheerio = require('cheerio'),
     twitter = require('simple-twitter'),
     RSS = require('rss'),
     unshort = require('unshort'),
-    feedcrawler = require('./feedcrawler.js');
+    feedcrawler = require('./feedcrawler.js'),
+    mongoose = require('mongoose'),
+    Feed = mongoose.model("Feed");
 
 var sep = "##########";
 
@@ -28,6 +33,17 @@ var feed = new RSS({
   site_url: 'http://www.informationintelligence.org/'
 });
 
+var done = function(err, res, options) {
+  if (err) { console.error(err); }
+
+  console.dir(options.httpStatusCode);
+
+  return res.render('error', {
+    title: "CITBA RSS | Something went wrong",
+    httpStatusCode: options.httpStatusCode
+  } );
+};
+
 exports.get_rss_content = function() {
   feed.items = [];
   twit.get('statuses/user_timeline', function (error, data) {
@@ -36,11 +52,13 @@ exports.get_rss_content = function() {
 
     var numOfFeeds = jsonData.length;
     var feedNum = 0;
+    // TODO: using async (faster?)
     _.each(jsonData, function (tweet) {
       //var tweet = jsonData[13];
 
       var urls = tweet.text.match(/http:\/\/t.co\/[0-9A-Za-z]+/g);
       if (urls && urls.length > 0) {
+        // TODO: compare urls and use longer one
         var url = urls[urls.length - 1];
 
         unshort(url, function (err, lUrl) {
@@ -67,7 +85,7 @@ exports.get_rss_content = function() {
             feedNum++;
             if (feedNum === numOfFeeds) {
               console.log("got them all? " + feed.items.length + " vs " + numOfFeeds);
-              //expressRes.send(feed.xml());
+              expressRes.send(feed.xml());
             }
           } else {
             var tweetInfo = {
@@ -86,7 +104,19 @@ exports.get_rss_content = function() {
                 var item = feedcrawler.get_feed_item(html, tweetInfo);
 
                 if (item !== null) {
+                  // TODO: save to db
                   feed.item(item);
+                  Feed.findOneAndUpdate(
+                    item,
+                    item,
+                    { upsert: true },
+                    function(err, saveRes) {
+                      if (err) { done(err, res, { httpStatusCode: 500 }); }
+
+                      console.dir(saveRes);
+
+
+                    });
                 }
                 //console.dir(item);
 
@@ -118,14 +148,23 @@ exports.get_rss_content = function() {
   });
 };
 
-exports.index = function(req, res){
+exports.index = function(req, res) {
   res.render('index');
 };
 
-exports.ba = function(req, res){
+exports.ba = function(req, res) {
+  Feed.aggregate(
+    //   { $match: { $not: { url: /http:\/\/\/*/i } } },
+    function(err, findRes) {
+      if (err) { done(err, res, { httpStatusCode: 500 }); }
+
+      //console.dir(findRes);
+
+      res.render('index', { title: "Fundacion Chile" });
+    });
   res.render('index');
 };
 
-exports.job = function(req, res){
+exports.job = function(req, res) {
   res.render('index');
 };
