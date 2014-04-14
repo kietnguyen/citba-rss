@@ -25,13 +25,13 @@ var twit = new twitter(
   false
 );
 
-var feed = new RSS({
+var feedOptions = {
   title: 'CITBA RSS',
   description: 'CITBA RSS Feed',
   generator: 'CITBA Feed Generator',
   feed_url: 'http://citba.lazzyweb.com/ba.xml',
   site_url: 'http://www.informationintelligence.org/'
-});
+};
 
 var done = function(err, res, options) {
   if (err) { console.error(err); }
@@ -45,7 +45,7 @@ var done = function(err, res, options) {
 };
 
 exports.get_rss_content = function() {
-  feed.items = [];
+  var feed = new RSS(feedOptions);
   twit.get('statuses/user_timeline', function (error, data) {
     var jsonData = JSON.parse(data);
     //console.dir(jsonData);
@@ -85,7 +85,7 @@ exports.get_rss_content = function() {
             feedNum++;
             if (feedNum === numOfFeeds) {
               console.log("got them all? " + feed.items.length + " vs " + numOfFeeds);
-              expressRes.send(feed.xml());
+              //expressRes.send(feed.xml());
             }
           } else {
             var tweetInfo = {
@@ -113,9 +113,7 @@ exports.get_rss_content = function() {
                     function(err, saveRes) {
                       if (err) { done(err, res, { httpStatusCode: 500 }); }
 
-                      console.dir(saveRes);
-
-
+                      //console.dir(saveRes);
                     });
                 }
                 //console.dir(item);
@@ -154,17 +152,38 @@ exports.index = function(req, res) {
 
 exports.ba = function(req, res) {
   Feed.aggregate(
-    //   { $match: { $not: { url: /http:\/\/\/*/i } } },
+    { $project: { _id: 0, author: 1, date: 1, description: 1, title: 1, url: 1 } },
+    { $match: { url: { $not: /http:\/\/careers.analytictalent.com\/*/i } } },
+    { $sort: { date: -1 } },
+    { $limit: 20 },
+    function(err, findRes) {
+      if (err) { done(err, res, { httpStatusCode: 500 }); }
+
+      console.dir(findRes);
+      var feed = new RSS(feedOptions);
+      _.each(findRes, function(item) {
+        feed.item(item);
+      });
+      res.set('Content-Type', 'application/rss+xml');
+      res.send(feed.xml());
+    });
+};
+
+exports.job = function(req, res) {
+  Feed.aggregate(
+    { $project: { _id: 0, author: 1, date: 1, description: 1, title: 1, url: 1 } },
+    { $match: { url: /http:\/\/careers.analytictalent.com\/*/i } },
+    { $sort: { date: -1 } },
+    { $limit: 20 },
     function(err, findRes) {
       if (err) { done(err, res, { httpStatusCode: 500 }); }
 
       //console.dir(findRes);
-
-      res.render('index', { title: "Fundacion Chile" });
+      var feed = new RSS(feedOptions);
+      _.each(findRes, function(item) {
+        feed.item(item);
+      });
+      res.set('Content-Type', 'application/rss+xml');
+      res.send(feed.xml());
     });
-  res.render('index');
-};
-
-exports.job = function(req, res) {
-  res.render('index');
 };

@@ -45,12 +45,12 @@ mongoose.connection.on('disconnected', function () {
   connect();
 });
 
-setInterval(function(err) {
-  if (err) { console.error(err); }
-
-  console.log("Getting new contents ... ");
-  routes.get_rss_content();
-}, 15 * 1000);
+//setInterval(function(err) {
+//  if (err) { console.error(err); }
+//
+//  console.log("Getting new contents ... ");
+//  routes.get_rss_content();
+//}, 15 * 1000);
 
 app.get('/', routes.index);
 app.get('/ba.xml', routes.ba);
