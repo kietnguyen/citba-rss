@@ -1,11 +1,8 @@
-
-/**
- * Module dependencies.
- */
+#!/usr/bin/env node
+"use strict";
 
 var express = require('express');
 var routes = require('./routes');
-var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 
@@ -30,8 +27,16 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+setInterval(function(err) {
+  if (err) { console.error(err); }
+
+  console.log("Getting new contents ... ");
+  get_rss_content();
+}, 15 * 60 * 1000);
+
 app.get('/', routes.index);
-app.get('/users', user.list);
+app.get('/ba.xml', routes.index);
+app.get('/jobs.xml', routes.index);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
