@@ -13,7 +13,7 @@
     "rss": "~0.3.2",
     "simple-twitter": "~1.0.3",
     "underscore": "~1.6.0",
-    "unshort": "~0.0.4",
+    "unshort": "~0.0.4"
   },
   "devDependencies": {},
   "scripts": {
