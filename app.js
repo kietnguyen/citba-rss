@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 "use strict";
 
+require('newrelic');
+
 var express = require('express');
 var routes = require('./routes');
 var mongoose = require('mongoose'),
@@ -10,7 +12,7 @@ var mongoose = require('mongoose'),
 var app = express();
 
 // all environments
-app.set('port', process.env.PORT || 4000);
+app.set('port', process.env.PORT || 5000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(express.favicon());
@@ -28,10 +30,21 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+var uristring =
+    process.env.MONGOLAB_URI ||
+    process.env.MONGOHQ_URL ||
+    'mongodb://localhost/citba-rss';
+
 // connect to db
 var connect = function () {
   var options = { server: { socketOptions: { keepAlive: 1 } } };
-  mongoose.connect("mongodb://localhost/citba-rss", options);
+  mongoose.connect(uristring, options, function (err, res) {
+    if (err) {
+      console.log ('ERROR connecting to: ' + uristring + '. ' + err);
+    } else {
+      console.log ('Succeeded connected to: ' + uristring);
+    }
+  });
 };
 connect();
 
