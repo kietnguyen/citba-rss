@@ -2,8 +2,8 @@
 "use strict";
 
 require("../models/feed.js");
-var twitterAPI = require("../config/api-keys/twitter.js");
-console.dir(twitterAPI);
+var twitterAPI = require("../config/api-keys/twitter.js").twitterAPI;
+
 var _ = require('lodash'),
     async = require('async'),
     http = require('http'),
