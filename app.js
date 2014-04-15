@@ -63,7 +63,7 @@ setInterval(function(err) {
 
   console.log("Getting new contents ... ");
   routes.get_rss_content();
-}, 60 * 60 * 1000);
+}, 15 * 60 * 1000);
 
 app.get('/', routes.index);
 app.get('/ba.xml', routes.ba);

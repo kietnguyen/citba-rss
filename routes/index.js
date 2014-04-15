@@ -30,7 +30,6 @@ var feedOptions = {
   title: 'CITBA RSS',
   description: 'CITBA RSS Feed',
   generator: 'CITBA Feed Generator',
-  feed_url: 'http://citba.lazzyweb.com/ba.xml',
   site_url: 'http://www.informationintelligence.org/'
 };
 
@@ -162,7 +161,8 @@ exports.ba = function(req, res) {
     function(err, findRes) {
       if (err) { done(err, res, { httpStatusCode: 500 }); }
 
-      console.dir(findRes);
+      //console.dir(findRes);
+      feedOptions.feed_url = 'http://citba-rss.herokuapp.com/ba.xml';
       var feed = new RSS(feedOptions);
       _.each(findRes, function(item) {
         feed.item(item);
@@ -182,6 +182,7 @@ exports.job = function(req, res) {
       if (err) { done(err, res, { httpStatusCode: 500 }); }
 
       //console.dir(findRes);
+      feedOptions.feed_url = 'http://citba-rss.herokuapp.com/job.xml';
       var feed = new RSS(feedOptions);
       _.each(findRes, function(item) {
         feed.item(item);
