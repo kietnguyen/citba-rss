@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 "use strict";
 
-var twitterAPI = require("../models/feed.js");
-require("../config/api-keys/twitter.js");
-
+require("../models/feed.js");
+var twitterAPI = require("../config/api-keys/twitter.js");
+console.dir(twitterAPI);
 var _ = require('lodash'),
     async = require('async'),
     http = require('http'),
@@ -51,8 +51,9 @@ exports.get_rss_content = function() {
     var jsonData = JSON.parse(data);
     //console.dir(jsonData);
 
-    var numOfFeeds = jsonData.length;
-    var feedNum = 0;
+    var numOfFeeds = jsonData.length,
+        feedNum = 0,
+        feedAdded = 0;
     // TODO: using async (faster?)
     _.each(jsonData, function (tweet) {
       //var tweet = jsonData[13];
@@ -94,6 +95,7 @@ exports.get_rss_content = function() {
               date: tweet.created_at,
               url: lUrl
             };
+
             var html = "";
             var req = http.request(lUrl, function (res) {
               res.on("data", function (chunk) {
@@ -105,10 +107,10 @@ exports.get_rss_content = function() {
                 var item = feedcrawler.get_feed_item(html, tweetInfo);
 
                 if (item !== null) {
-                  // TODO: save to db
-                  feed.item(item);
+                  //feed.item(item);
+                  feedAdded++;
                   Feed.findOneAndUpdate(
-                    item,
+                    { url: item.url },
                     item,
                     { upsert: true },
                     function(err, saveRes) {
@@ -121,7 +123,7 @@ exports.get_rss_content = function() {
 
                 feedNum++;
                 if (feedNum === numOfFeeds) {
-                  console.log("got them all? " + feed.items.length + " vs " + numOfFeeds);
+                  console.log("got them all? " + feedAdded + " vs " + numOfFeeds);
                   //expressRes.send(feed.xml());
                 }
 

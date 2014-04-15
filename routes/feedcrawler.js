@@ -3,6 +3,7 @@
 
 var _ = require('lodash'),
     cheerio = require('cheerio'),
+    Readability = require("readabilitySAX").Readability,
     querystring = require('querystring');
 
 var sep = "########################################";
