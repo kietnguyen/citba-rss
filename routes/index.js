@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 "use strict";
 
-require("../models/feed.js");
+var twitterAPI = require("../models/feed.js");
+require("../config/api-keys/twitter.js");
 
 var _ = require('lodash'),
     async = require('async'),
@@ -18,10 +19,10 @@ var _ = require('lodash'),
 var sep = "##########";
 
 var twit = new twitter(
-  'AQyMTtSZPpgaxP9rIMlA',
-  'EjRrtBi3MSnNlLrfv8Sh6qUw9b0RmDTzH8whhjlEM',
-  '702585769-GfdgGdBUmQkYv1Ga4r86DBlEcMyDUVHtFA9sO34K',
-  'XGgYulUnB8j4BUedmpfJ0kOmbzYp9cAJptFkjjGWBhI4E',
+  twitterAPI.consumer_key,
+  twitterAPI.consumer_secret_key,
+  twitterAPI.access_token,
+  twitterAPI.access_token_secret,
   false
 );
 
@@ -153,7 +154,7 @@ exports.index = function(req, res) {
 exports.ba = function(req, res) {
   Feed.aggregate(
     { $project: { _id: 0, author: 1, date: 1, description: 1, title: 1, url: 1 } },
-    { $match: { url: { $not: /http:\/\/careers.analytictalent.com\/*/i } } },
+    { $match: { url: { $not: /http:\/\/careers.analytictalent.com\/.*/i } } },
     { $sort: { date: -1 } },
     { $limit: 20 },
     function(err, findRes) {
@@ -172,7 +173,7 @@ exports.ba = function(req, res) {
 exports.job = function(req, res) {
   Feed.aggregate(
     { $project: { _id: 0, author: 1, date: 1, description: 1, title: 1, url: 1 } },
-    { $match: { url: /http:\/\/careers.analytictalent.com\/*/i } },
+    { $match: { url: /http:\/\/careers.analytictalent.com\/.*/i } },
     { $sort: { date: -1 } },
     { $limit: 20 },
     function(err, findRes) {
