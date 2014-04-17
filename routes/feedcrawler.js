@@ -53,7 +53,7 @@ var analyticbridge = function ($, tweetInfo) {
   console.log("\ttitle: " + title);
 
   var author = $(".navigation.byline li a").eq(1).text();
-  console.log("\tauthour: " + author);
+  console.log("\tauthor: " + author);
 
   var description = $('.postbody .xg_user_generated').html();
   //console.log("\tdescription: " + description);
@@ -78,7 +78,7 @@ var analytictalent = function ($, tweetInfo) {
   console.log("\ttitle: " + title);
 
   var author = $('.aiApplyCompanyName').text().replace(/[\t\r\n\v\f]+/, '').trim();
-  console.log("\tauthour: " + author);
+  console.log("\tauthor: " + author);
 
   $('.aiJobRequirements h3').remove();
   var description = $('.aiJobRequirements').html();
@@ -104,7 +104,7 @@ var beautifuldata = function ($, tweetInfo) {
   console.log("\ttitle: " + title);
 
   var author = $(".author a").text();
-  console.log("\tauthour: " + author);
+  console.log("\tauthor: " + author);
 
   $('.entry_content sharedaddy').remove();
   var description = $('.entry_content').html();
@@ -159,7 +159,7 @@ var datascience101 = function ($, tweetInfo) {
   console.log("\ttitle: " + title);
 
   var author = $(".author-link").text();
-  console.log("\tauthour: " + author);
+  console.log("\tauthor: " + author);
 
   $('.entry-content #jp-post-flair').remove();
   var description = $('.entry-content').html();
@@ -185,7 +185,7 @@ var datasciencecentral = function ($, tweetInfo) {
   console.log("\ttitle: " + title);
 
   var author = $('.xg_headline .byline a').eq(1).text();
-  console.log("\tauthour: " + author);
+  console.log("\tauthor: " + author);
 
   $('.entry-content #jp-post-flair').remove();
   var description = $('.postbody .xg_user_generated').html();
@@ -211,7 +211,7 @@ var directionsmag = function ($, tweetInfo) {
   console.log("\ttitle: " + title);
 
   var author = $('.info .source a, .info .authors a').text();
-  console.log("\tauthour: " + author);
+  console.log("\tauthor: " + author);
 
   var description = $('.content').html();
   //console.log("\tdescription: " + description);
@@ -236,7 +236,7 @@ var entrepreneur = function ($, tweetInfo) {
   console.log("\ttitle: " + title);
 
   var author = $('.title.author').text();
-  console.log("\tauthour: " + author);
+  console.log("\tauthor: " + author);
 
   $('#article .Dbio').remove();
   $('#article .moretopics').remove();
@@ -264,7 +264,7 @@ var fastcoexist = function ($, tweetInfo) {
   console.log("\ttitle: " + title);
 
   var author = $('h4.author-name').text();
-  console.log("\tauthour: " + author);
+  console.log("\tauthor: " + author);
 
   var description = $('.body').html();
   //console.log("\tdescription: " + description);
@@ -342,7 +342,7 @@ var inc = function ($, tweetInfo) {
   console.log("@inc: " + tweetInfo.url);
 
   var author = $('#headline .byline a').text();
-  console.log("\tauthour: " + author);
+  console.log("\tauthor: " + author);
 
   $('#headline .byline').remove();
   var title = $('#headline').text().trim();
@@ -371,7 +371,7 @@ var informationweek = function ($, tweetInfo) {
   console.log("\ttitle: " + title);
 
   var author = $('.author-info-block .color-link').text();
-  console.log("\tauthour: " + author);
+  console.log("\tauthor: " + author);
 
   $('#article-main header').remove();
   $('#article-main .divsplitter').remove();
@@ -400,7 +400,7 @@ var jeffheaton = function ($, tweetInfo) {
   console.log("\ttitle: " + title);
 
   var author = "Jeff Heaton";
-  console.log("\tauthour: " + author);
+  console.log("\tauthor: " + author);
 
   var description = $('.entry-content').html();
   //console.log("\tdescription: " + description);
@@ -425,7 +425,7 @@ var kdnuggets = function ($, tweetInfo) {
   console.log("\ttitle: " + title);
 
   var author = "KDnuggets";
-  console.log("\tauthour: " + author);
+  console.log("\tauthor: " + author);
 
   var description = $('#post-').html();
   //console.log("\tdescription: " + description);
@@ -450,7 +450,7 @@ var r_bloggers = function ($, tweetInfo) {
   console.log("\ttitle: " + title);
 
   var author = $(".meta a").text();
-  console.log("\tauthour: " + author);
+  console.log("\tauthor: " + author);
 
   $('.entry social4i').remove();
   var description = $('.entry').html();
@@ -476,7 +476,7 @@ var spectrum_ieee = function ($, tweetInfo) {
 
   var byline = $('.metadata .byline').text();
   var author = byline.substring(byline.search('By')+3, byline.search('Posted')).trim();
-  console.log("\tauthour: " + author);
+  console.log("\tauthor: " + author);
 
   $('.article-detail #artImg').prevAll().remove();
   $('.article-detail .entry-content').nextAll().remove();
@@ -502,7 +502,7 @@ var youtube = function ($, tweetInfo) {
   console.log("\ttitle: " + title);
 
   var author = $(".yt-user-name").first().text();
-  console.log("\tauthour: " + author);
+  console.log("\tauthor: " + author);
 
   var v = querystring.parse(tweetInfo.url.match(/v=.+/)[0]).v;
   $("#watch-description-text").prepend('<iframe width="560" height="315" src="//www.youtube.com/embed/' + v + '" frameborder="0" allowfullscreen></iframe>');
