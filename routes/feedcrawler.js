@@ -13,10 +13,13 @@ var preprocessing = function (html) {
 };
 
 var post_processing = function (html) {
+  // Remove tabs and new line characters
+  html.replace(/\t\n/g, '');
   var $ = cheerio.load(html);
 
   // Remove all css classes
   $().removeClass();
+
 
   // Remove empty paragraph <p></p>
   var len = $("p").length;

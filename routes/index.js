@@ -27,7 +27,7 @@ var twit = new twitter(
 );
 
 var feedOptions = {
-  title: 'CITBA RSS',
+  title: 'CITBA',
   description: 'CITBA RSS Feed',
   generator: 'CITBA Feed Generator',
   site_url: 'http://www.informationintelligence.org/'
