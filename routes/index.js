@@ -2,7 +2,6 @@
 "use strict";
 
 require("../models/feed.js");
-var twitterAPI = require("../config/api-keys/twitter.js").twitterAPI;
 
 var _ = require('lodash'),
     async = require('async'),
@@ -19,10 +18,10 @@ var _ = require('lodash'),
 var sep = "##########";
 
 var twit = new twitter(
-  twitterAPI.consumer_key,
-  twitterAPI.consumer_secret_key,
-  twitterAPI.access_token,
-  twitterAPI.access_token_secret,
+  process.env.TWITTER_CONSUMER_KEY,
+  process.env.TWITTER_CONSUMER_SECRET_KEY,
+  process.env.TWITTER_ACCESS_TOKEN,
+  process.env.TWITTER_ACCESS_TOKEN_SECRET,
   false
 );
 

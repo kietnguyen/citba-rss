@@ -9,7 +9,7 @@ exports.config = {
    *
    * @env NEW_RELIC_APP_NAME
    */
-  app_name : ['citba-rss'],
+  app_name : [ process.env.NEW_RELIC_APP_NAME ],
   /**
    * The user's license key. Must be set by per-app configuration file.
    *

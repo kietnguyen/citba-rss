@@ -20,7 +20,7 @@ app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
-app.use(express.cookieParser('your secret here'));
+app.use(express.cookieParser(process.env.COOKIE_PARSER_SECRET));
 app.use(express.session());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
@@ -58,12 +58,14 @@ mongoose.connection.on('disconnected', function () {
   connect();
 });
 
+/*
 setInterval(function(err) {
   if (err) { console.error(err); }
 
   console.log("Getting new contents ... ");
   routes.get_rss_content();
-}, 15 * 60 * 1000);
+}, 15 * 1000);
+*/
 
 app.get('/', routes.index);
 app.get('/ba.xml', routes.ba);
