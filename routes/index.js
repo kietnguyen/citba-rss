@@ -161,7 +161,8 @@ exports.ba = function(req, res) {
       if (err) { done(err, res, { httpStatusCode: 500 }); }
 
       //console.dir(findRes);
-      feedOptions.feed_url = 'http://citba-rss.herokuapp.com/ba.xml';
+      feedOptions.feed_url = 'http://162.248.140.66/ba.xml';
+      feedOptions.title = "CITBA Business Analytics";
       var feed = new RSS(feedOptions);
       _.each(findRes, function(item) {
         feed.item(item);
@@ -181,7 +182,8 @@ exports.job = function(req, res) {
       if (err) { done(err, res, { httpStatusCode: 500 }); }
 
       //console.dir(findRes);
-      feedOptions.feed_url = 'http://citba-rss.herokuapp.com/job.xml';
+      feedOptions.feed_url = 'http://162.248.140.66/job.xml';
+      feedOptions.title = "CITBA Jobs";
       var feed = new RSS(feedOptions);
       _.each(findRes, function(item) {
         feed.item(item);
