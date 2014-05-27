@@ -1,0 +1,27 @@
+{
+  "node": true,
+  "strict": true,
+  "multistr": true,
+  "undef": true,
+  "unused": true,
+  "eqeqeq": true,
+  "forin": true,
+  "immed": true,
+  "latedef": true,
+  "newcap": true,
+  "nonew": true,
+  "quotmark": "single",
+  "trailing": true,
+  "curly": true,
+  "indent": 2,
+  "devel": true,
+  "laxcasebreak": true,
+  "globals": {
+    "window": true,
+    "console": true,
+    "require": true,
+    "define": true,
+    "$": true,
+    "_": true
+  }
+}
