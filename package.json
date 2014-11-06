@@ -7,18 +7,19 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "express": "3.4.8",
-    "jade": "*",
+    "async": "^0.7.0",
     "cheerio": "~0.13.1",
+    "express": "3.4.8",
+    "html-minify": "^0.3.1",
+    "jade": "*",
+    "lodash": "^2.4.1",
+    "mongoose": "^3.8.8",
+    "newrelic": "^1.5.0",
+    "readabilitySAX": "^1.6.1",
     "rss": "~0.3.2",
     "simple-twitter": "~1.0.3",
     "unshort": "~0.0.4",
-    "lodash": "^2.4.1",
-    "mongoose": "^3.8.8",
-    "readabilitySAX": "^1.6.1",
-    "async": "^0.7.0",
-    "newrelic": "^1.5.0",
-    "html-minify": "^0.3.1"
+    "url": "^0.10.1"
   },
   "devDependencies": {},
   "author": "Kiet Nguyen",

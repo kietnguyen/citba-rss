@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-"use strict";
+'use strict';
 
 require('newrelic');
 
@@ -12,7 +12,7 @@ var mongoose = require('mongoose'),
 var app = express();
 
 // all environments
-app.set('port', process.env.PORT || 5000);
+app.set('port', process.env.PORT || 4000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(express.favicon());
@@ -26,7 +26,7 @@ app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
-if ('development' == app.get('env')) {
+if (app.get('env') === 'development') {
   app.use(express.errorHandler());
 }
 
@@ -41,6 +41,7 @@ var connect = function () {
   mongoose.connect(uristring, options, function (err, res) {
     if (err) {
       console.log ('ERROR connecting to: ' + uristring + '. ' + err);
+
     } else {
       console.log ('Succeeded connected to: ' + uristring);
     }
@@ -58,18 +59,16 @@ mongoose.connection.on('disconnected', function () {
   connect();
 });
 
-/*
 setInterval(function(err) {
   if (err) { console.error(err); }
 
-  console.log("Getting new contents ... ");
+  console.log('Getting new contents ... ');
   routes.get_rss_content();
-}, 15 * 1000);
-*/
+}, 5 * 60 * 1000);
 
 app.get('/', routes.index);
-app.get('/ba.xml', routes.ba);
-app.get('/job.xml', routes.job);
+app.get(/\/ba.(xml|json)/, routes.ba);
+app.get(/\/job.(xml|json)/, routes.job);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
